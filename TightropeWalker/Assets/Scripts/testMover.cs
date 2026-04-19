@@ -3,6 +3,7 @@ using UnityEngine;
 public class testMover : MonoBehaviour
 {
     public Vector3 newPos;
+    public GameObject body;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,13 +21,13 @@ public class testMover : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.eulerAngles = new Vector3(90,0,0);
-            transform.position = transform.position + new Vector3(0,-1,0);
+            body.transform.eulerAngles = new Vector3(90,0,0);
+            body.transform.position = transform.position + new Vector3(0,-1,0);
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-            transform.position = transform.position + new Vector3(0, 1, 0);
+            body.transform.eulerAngles = new Vector3(0, 0, 0);
+            body.transform.position = transform.position + new Vector3(0, 1, 0);
         }
     }
 }
