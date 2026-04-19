@@ -12,7 +12,7 @@ public class testMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space))
         {
             Debug.Log("moving");
             newPos = transform.position += new Vector3(0, 0, 2) * Time.deltaTime;
