@@ -12,7 +12,6 @@ namespace NodeCanvas.Tasks.Actions {
 		public Material childMatDefault;
 		public Material childMatHyper;
 		public GameObject body;
-		public int numberOfFlashes = 0;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -55,7 +54,6 @@ namespace NodeCanvas.Tasks.Actions {
             body.GetComponent<Renderer>().material = childMatHyper;
             if (flashDuration <= 0f)
 			{
-                numberOfFlashes++;
                 body.GetComponent<Renderer>().material = childMatDefault;
 				Debug.Log("flash reset");
 				EndAction(true);
