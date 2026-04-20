@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace NodeCanvas.Tasks.Actions {
 
-	public class MoveToPosAT : ActionTask {
+	public class MoveBackAT : ActionTask {
 
 		public BBParameter<UnityEngine.Vector3> position1;
 		public BBParameter<UnityEngine.Vector3> position2;
 
 		bool atRope;
 
-        //Use for initialization. This is called only once in the lifetime of the task.
-        //Return null if init was successfull. Return an error string otherwise
-        protected override string OnInit() {
+		//Use for initialization. This is called only once in the lifetime of the task.
+		//Return null if init was successfull. Return an error string otherwise
+		protected override string OnInit() {
 			return null;
 		}
 
@@ -22,20 +22,20 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
-			atRope = false;
+			atRope = true;
             //EndAction(true);
-		}
+        }
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
-            if (atRope == false)
+            if (atRope == true)
             {
-                agent.transform.position = UnityEngine.Vector3.MoveTowards(agent.transform.position, position2.value, 2f * Time.deltaTime);
+                agent.transform.position = UnityEngine.Vector3.MoveTowards(agent.transform.position, position1.value, 2f * Time.deltaTime);
             }
-			if (Vector3.Distance(agent.transform.position, position2.value) < 0.2f)
+            if (Vector3.Distance(agent.transform.position, position1.value) < 0.2f)
             {
-				atRope = true;
-				EndAction(true);
+                atRope = false;
+                EndAction(true);
             }
         }
 
