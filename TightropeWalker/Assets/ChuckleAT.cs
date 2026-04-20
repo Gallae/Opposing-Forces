@@ -11,6 +11,8 @@ namespace NodeCanvas.Tasks.Actions {
 		Vector3 originalPos;
         Vector3 laughPos = new Vector3(0, 0.5f, 0);
 		int laughCounter;
+        float timer;
+        bool laughUp;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -28,26 +30,31 @@ namespace NodeCanvas.Tasks.Actions {
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
-            if (laughCounter % 2 == 0)
+            timer += Time.deltaTime;
+            if (timer >= 0.2f)
             {
+                timer = 0f;
                 Debug.Log("up");
-                agent.transform.position += laughPos;
+                if (!laughUp)
+                {
+                    agent.transform.position += laughPos;
+                }
+                else
+                {
+                    agent.transform.position -= laughPos;
+                }
+                laughUp = !laughUp;
+                laughCounter++;
             }
-            else
-            {
-                Debug.Log("down");
-                agent.transform.position -= laughPos;
-            }
-            laughCounter++;
-            if (laughCounter >= 100)
+            if (laughCounter >= 6)
             {
                 agent.transform.position = originalPos;
                 EndAction(true);
             }
         }
 
-		//Called when the task is disabled.
-		protected override void OnStop() {
+        //Called when the task is disabled.
+        protected override void OnStop() {
 			
 		}
 

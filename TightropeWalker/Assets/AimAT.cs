@@ -36,27 +36,31 @@ namespace NodeCanvas.Tasks.Actions {
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
-            lineDirection = (player.value.transform.position - (agent.transform.position - new Vector3(0, 1.5f, 0))).normalized;
-
-			currentLength += growSpeed * Time.deltaTime;
-			currentLineEnd = lineStart + (lineDirection * currentLength);
-
-			if (Vector3.Distance(lineStart, currentLineEnd) > Vector3.Distance(lineStart, player.value.transform.position))
+			if (player.value.GetComponent<testMover>().playerFling == false)
 			{
-				aimDuration -= Time.deltaTime;
-				if (aimDuration <= 0f)
-				{
-					lr.positionCount = 0;
-					currentLength = 0f;
-					currentLineEnd = lineStart;
-					EndAction(true);
-				}
-			}
-            else
-            {
-                lr.SetPosition(0, lineStart);
-                lr.SetPosition(1, currentLineEnd);
+                lineDirection = (player.value.transform.position - (agent.transform.position - new Vector3(0, 1.5f, 0))).normalized;
+
+                currentLength += growSpeed * Time.deltaTime;
+                currentLineEnd = lineStart + (lineDirection * currentLength);
+
+                if (Vector3.Distance(lineStart, currentLineEnd) > Vector3.Distance(lineStart, player.value.transform.position))
+                {
+                    aimDuration -= Time.deltaTime;
+                    if (aimDuration <= 0f)
+                    {
+                        lr.positionCount = 0;
+                        currentLength = 0f;
+                        currentLineEnd = lineStart;
+                        EndAction(true);
+                    }
+                }
+                else
+                {
+                    lr.SetPosition(0, lineStart);
+                    lr.SetPosition(1, currentLineEnd);
+                }
             }
+            
         }
 
 		//Called when the task is disabled.

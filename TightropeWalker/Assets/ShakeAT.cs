@@ -8,7 +8,10 @@ namespace NodeCanvas.Tasks.Actions {
 	public class ShakeAT : ActionTask {
 
 		public GameObject rope;
+		public GameObject player;
 		int shakeCounter;
+		float timer;
+		bool ropeUp;
 		Vector3 originalPos;
         Vector3 shakePos = new Vector3(0,0.25f,0);
 
@@ -28,20 +31,27 @@ namespace NodeCanvas.Tasks.Actions {
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
-            if (shakeCounter % 20 == 0)
+			timer += Time.deltaTime;
+			player.GetComponent<testMover>().ropeShaking = true;
+            if (timer >= 0.15f)
             {
+				timer = 0f;
                 Debug.Log("up");
-                rope.transform.position += shakePos;
+				if (!ropeUp)
+				{
+					rope.transform.position += shakePos;
+                }
+				else
+				{
+					rope.transform.position -= shakePos;
+                }
+				ropeUp = !ropeUp;
+				shakeCounter++;
             }
-            if (shakeCounter % 20 == 10)
-            {
-                Debug.Log("down");
-                rope.transform.position -= shakePos;
-            }
-            shakeCounter++;
-            if (shakeCounter >= 100)
+            if (shakeCounter >= 15)
             {
                 rope.transform.position = originalPos;
+				player.GetComponent<testMover>().ropeShaking = false;
                 EndAction(true);
             }
         }
